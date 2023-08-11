@@ -1,18 +1,43 @@
-<div>
-  <div>
+<div class="container">
+  <div class="ui card">
     <h1>Team Generator</h1>
-    <ul>
-      <li>Salami Gideon</li>
-      <li>Paul Boamah</li>
+    <ul class="list">
+      <li *ngFor="let member of members">{{ member }}</li>
     </ul>
-  <div>
-    <input type="text" placeholder="Name" />
-    <button>Add</button>
+  <div class="add-members-container">
+    <input
+      #addMemberInput 
+      type="text" 
+      placeholder="Name"
+      (input) = "onInput(addMemberInput.value)"
+      [value]="newMemberName"
+      [class]="newMemberName"
+      />
+    <button (click)="addMember()">Add</button>
 
-    <div>
-      <input type="text" placeholder="# of teams" />
-      <button>Generate</button>
+    <div class="input-container">
+      <input
+      #numberOfTeamsInput 
+      type="number" 
+      placeholder="# of teams" 
+      (input) = "onNumberOfTeamsInput(numberOfTeamsInput.value)"
+      [value]="numberOfTeams"
+      />
+      <button
+        (click)="generateTeams()"
+      >Generate</button>
     </div>
   </div>
+
+    <p *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</p>
   </div>
+
+<div ngIf="teams.length" class="teams-container" >
+  <app-team>
+    *ngFor="let team of teams; let i = index"
+    [team]="teams"
+    [index]="i"
+  </app-team>
+
+</div>
 </div>
